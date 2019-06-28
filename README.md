@@ -1,4 +1,9 @@
 # log4js-autolog
+
+[![NPM version][npm-image]][npm-url]
+[![Build status][travis-image]][travis-url]
+[![Test coverage][codecov-image]][codecov-url]
+
 A TypeScript method decorator for log4js, just decorate the method to generate a log before/after execution
 
 # How to use it
@@ -55,3 +60,10 @@ f.getLength(null);
     - `errLevel`: a string, the log level when exception thrown, default is "warn"
     - `timer` if true, will include the total execution time in the log message, only valid for async or promise result
     
+
+[npm-image]: https://img.shields.io/npm/v/log4js-autolog.svg?style=flat
+[npm-url]: https://npmjs.org/package/log4js-autolog
+[travis-image]: https://travis-ci.org/samngms/log4js-autolog.svg?branch=master
+[travis-url]: https://travis-ci.org/samngms/log4js-autolog
+[codecov-image]: https://codecov.io/gh/samngms/log4js-autolog/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/samngms/log4js-autolog
