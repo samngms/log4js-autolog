@@ -1,48 +1,61 @@
 # log4js-autolog
 
+A TypeScript method decorator for log4js, just decorate the method to generate a log before/after execution
+
 [![NPM version][npm-image]][npm-url]
 [![Build status][travis-image]][travis-url]
 [![Test coverage][codecov-image]][codecov-url]
 
-A TypeScript method decorator for log4js, just decorate the method to generate a log before/after execution
-
 # How to use it
 
 ```typescript
+import * as Log4js from "log4js";
 import {autolog} from "log4js-autolog";
 
+const logger = Log4js.getLogger("Foo");
+logger.level = 'debug';
+
 class Foo {
-    const readonly logger = Log4js.getLogger("Foo");
-    
-    @autolog(logger)
-    public greet(name: string) {
-        return `Hello: ${name.length}`;
-    }
-    
-    @autolog(logger, {timer: true})
-    public asyncGreet(name: string) {
-        return Promise.resolve(`Hello: ${name.length}`);
-    }    
-    
-    // note "logger" is a string, it will get the logger by calling this["logger"]
-    @autolog("logger", {errLevel: "error"})
-    public getLength(name: string) {
-        return name.length;
-    }
+  private logger = logger;
+
+  @autolog(logger)
+  public greet(name: string) {
+    return `Hello: ${name}`;
+  }
+
+  @autolog(logger, {timer: true})
+  public async asyncGreet(name: string) {
+    return Promise.resolve(`Hello: ${name}`);
+  }
+
+  // note "logger" is a string, it will get the logger by calling this["logger"]
+  @autolog("logger", {errLevel: "error"})
+  public getLength(name: string) {
+    return name.length;
+  }
 }
 
-const f = new Foo();
-f.greet("Turing");
-await f.asyncGreet("Turing");
-f.getLength(null);
+async function main() {
+  const f = new Foo();
+  f.greet("Turing");
+  await f.asyncGreet("Turing");
+  try {
+    // @ts-ignore
+    f.getLength(null);
+  } catch (err) {
+    // console.log(err);
+  }
+}
+
+main();
 ```
 
 ```shell
 >>>> OUTPUT >>>>
-[DEBUG] Foo - Foo.greet('Turing') => 'Hello Turing'
-[DEBUG] Foo - async Foo.asyncGreet('Turing') called 
-[DEBUG] Foo - async Foo.asyncGreet('Turing') (1ms) => 'Hello Turing'
-[ERROR] FOO - Foo.getLength(null) => TypeError: Cannot read property 'length' of null
+[DEBUG] Foo - Foo.greet('Turing') => 'Hello: Turing'
+[DEBUG] Foo - async Foo.asyncGreet('Turing') called
+[DEBUG] Foo - async Foo.asyncGreet('Turing') (0ms) => 'Hello: Turing'
+[ERROR] Foo - Foo.getLength(null) => TypeError: Cannot read property 'length' of null
 ```
 
 
