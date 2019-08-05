@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import * as util from "util";
 import { Logger } from "log4js";
 
@@ -30,7 +29,7 @@ export function autolog(logger: Logger | string, opt?: any) {
 
             // convert list of greet arguments to string, use Node.util.inspect, not JSON.stringify
             const params = args.map((item) => util.inspect(item, inspectOpt)).join();
-            const typeName = _.get(target, "constructor.name");
+            const typeName = target && target.constructor && target.constructor.name;
             const fullName = (typeName) ? `${typeName}.${propertyName}` : propertyName;
 
             let log: Logger;

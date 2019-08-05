@@ -1,6 +1,6 @@
 {
   "name": "log4js-autolog",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/samngms/log4js-autolog",
@@ -12,6 +12,7 @@
     "test-coverage": "nyc mocha --recursive --exit --require ./node_modules/ts-node/register --require source-map-support/register ./lib/*test*",
     "upload-coverage": "nyc report --reporter=text-lcov > coverage.lcov; codecov"
   },
+  "keywords": ["log4js", "decorator", "annotation"],
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/lodash": "^4.14.135",
@@ -26,7 +27,6 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
     "log4js": "^4.4.0"
   },
   "nyc": {
